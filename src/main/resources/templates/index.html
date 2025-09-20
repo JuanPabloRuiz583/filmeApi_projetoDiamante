@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dracula" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    <title>Filme List</title>
+</head>
+<body>
+
+<nav class="navbar bg-base-300 shadow-sm">
+    <div class="flex-1">
+        <a class="btn btn-ghost text-xl">FilmeApi</a>
+    </div>
+    <div class="flex-none">
+        <!-- User avatar and language dropdown (same as your example) -->
+    </div>
+</nav>
+
+<a href="/filme/form" class="btn btn-primary m-4">Novo Filme</a>
+
+<div th:if="${message}" role="alert" class="alert alert-success alert-soft m-4">
+    <span th:text="${message}"></span>
+</div>
+
+<main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 place-items-center">
+    <div th:each="filme : ${filmes}" class="card w-96 bg-base-300 card-md shadow-sm relative">
+        <div class="card-body items-center">
+            <h2 class="card-title" th:text="${filme.titulo}"></h2>
+            <span class="badge badge-accent m-2" th:text="${filme.genero}"></span>
+            <p><strong>Ano:</strong> <span th:text="${filme.anoLancamento}"></span></p>
+            <p><strong>Diretor:</strong> <span th:text="${filme.diretor}"></span></p>
+            <div th:if="${filme.capaUrl}">
+                <img th:src="${filme.capaUrl}" alt="Capa do Filme" class="rounded-lg w-32 h-48 object-cover m-2"/>
+            </div>
+            <p class="text-xs text-gray-400" th:text="${#temporals.format(filme.dataCadastro, 'dd/MM/yyyy HH:mm')}"></p>
+        </div>
+        <div class="justify-end card-actions m-4">
+            <a th:href="@{'/filme/edit/' + ${filme.id}}" class="btn btn-info">Editar</a>
+            <form th:action="@{'/filme/' + ${filme.id}}" method="post" style="display:inline;">
+                <input type="hidden" name="_method" value="DELETE">
+                <button class="btn btn-primary" type="submit">Excluir</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
