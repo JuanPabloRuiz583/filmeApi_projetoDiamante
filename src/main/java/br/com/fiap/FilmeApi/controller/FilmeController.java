@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/filmes")
@@ -18,22 +19,22 @@ public class FilmeController {
     @Autowired
     private FilmeService filmeService;
 
-    // List all films (index.html)
+
     @GetMapping
     public String listar(Model model) {
         model.addAttribute("filmes", filmeService.listarTodos());
         return "index";
     }
 
-    // Show form for new film (form.html)
-    @GetMapping("/novo")
+
+    @GetMapping("/form")
     public String novo(Model model) {
         model.addAttribute("filme", new Filme());
         return "form";
     }
 
     // Save film
-    @PostMapping("/salvar")
+    @PostMapping("/form")
     public String salvar(@Valid @ModelAttribute Filme filme, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "form";
