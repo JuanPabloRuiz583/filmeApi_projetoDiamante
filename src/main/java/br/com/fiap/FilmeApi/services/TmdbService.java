@@ -28,9 +28,7 @@ public class TmdbService {
         try {
             String query = URLEncoder.encode(titulo, StandardCharsets.UTF_8);
             String url = "/search/movie?api_key=" + apiKey + "&query=" + query;
-            if (ano != null) {
-                url += "&year=" + ano;
-            }
+            // busca so pelo nome
 
             Mono<Map> respMono = webClient.get().uri(url).retrieve().bodyToMono(Map.class);
             Map resp = respMono.block();
