@@ -1,23 +1,43 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="emerald">
+<html lang="en" data-theme="dracula" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
-    <title>Mottu Sense</title>
+    <title>FilmeApi</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #111827 0%, #1a1a2e 100%);
+            font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+            color: #e5e7eb;
+        }
+        .card {
+            background: #18181b;
+            border: 2px solid #374151;
+            color: #e5e7eb;
+        }
+        .btn-success {
+            background: linear-gradient(90deg, #2563eb 0%, #1e40af 100%);
+            border: none;
+            color: #e5e7eb;
+        }
+        h1, h2 {
+            color: #e5e7eb;
+        }
+    </style>
 </head>
-<body class="bg-green-50 min-h-screen flex flex-col justify-center items-center">
+<body class="min-h-screen flex flex-col justify-center items-center">
 
-<h1 class="text-3xl text-green-700 font-bold p-8">Mottu Sense</h1>
+<h1 class="text-3xl font-bold p-8">FilmeApi</h1>
 
-<div class="card bg-green-100 text-green-700 w-96 mx-auto">
+<div class="card w-96 mx-auto">
     <div class="card-body items-center text-center">
         <h2 class="card-title">Logout</h2>
         <p>Tem certeza que deseja sair?</p>
         <div class="card-actions justify-end">
             <a href="javascript:history.back()" class="btn btn-success">Cancelar</a>
-            <form method="post" th:action="${'/logout'}">
+            <form method="post" th:action="@{/logout}">
                 <button class="btn btn-success">Logout</button>
             </form>
         </div>
