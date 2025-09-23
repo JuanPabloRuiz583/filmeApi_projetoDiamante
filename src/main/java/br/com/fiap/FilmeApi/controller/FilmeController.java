@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 @Controller
 @RequestMapping("/filmes")
@@ -21,8 +23,14 @@ public class FilmeController {
 
 
     @GetMapping
-    public String listar(Model model) {
+    public String listar(Model model,@AuthenticationPrincipal OAuth2User user) {
+        if (user == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("filmes", filmeService.listarTodos());
+        model.addAttribute("user", user);
+        var avatar = user.getAttribute("picture") != null ? user.getAttribute("picture") :  user.getAttribute("avatar_url");
+        model.addAttribute("avatar", avatar);
         return "index";
     }
 
@@ -43,16 +51,7 @@ public class FilmeController {
         return "redirect:/filmes";
     }
 
-    // Edit film
-    @GetMapping("/editar/{id}")
-    public String editar(@PathVariable Long id, Model model) {
-        return filmeService.buscarPorId(id)
-                .map(filme -> {
-                    model.addAttribute("filme", filme);
-                    return "form";
-                })
-                .orElse("redirect:/filmes");
-    }
+
 
     // Delete film
     @GetMapping("/deletar/{id}")

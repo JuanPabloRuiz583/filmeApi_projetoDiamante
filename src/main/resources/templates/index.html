@@ -1,36 +1,91 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dracula" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt" data-theme="dracula" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
-    <title>Filme List</title>
+    <title>FilmeApi - Catálogo</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #111827 0%, #1a1a2e 100%);
+            font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+            color: #e5e7eb;
+        }
+        .navbar {
+            background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%);
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #374151 0%, #111827 100%);
+            border: none;
+            color: #e5e7eb;
+        }
+        .btn-info {
+            background: linear-gradient(90deg, #2563eb 0%, #1e40af 100%);
+            border: none;
+            color: #e5e7eb;
+        }
+        .card {
+            background: #18181b;
+            border: 2px solid #374151;
+        }
+        .badge-accent {
+            background: #2563eb;
+            color: #e5e7eb;
+            font-weight: bold;
+        }
+        .card-title {
+            font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+            letter-spacing: 1px;
+            color: #e5e7eb;
+        }
+        .card-actions .btn {
+            margin-right: 0.5rem;
+        }
+        h1, h2 {
+            color: #e5e7eb;
+        }
+    </style>
 </head>
 <body>
 
-<nav class="navbar bg-base-300 shadow-sm">
-    <div class="flex-1">
-        <a class="btn btn-ghost text-xl">FilmeApi</a>
-    </div>
-    <div class="flex-none">
-        <!-- User avatar and language dropdown (same as your example) -->
-    </div>
-</nav>
 
-<a href="/filmes/form" class="btn btn-primary m-4">Novo Filme</a>
+    <!-- Adicione dentro da navbar, após o logo -->
+    <nav class="navbar shadow-lg mb-6 flex justify-between items-center px-8">
+        <div class="flex-1">
+            <a class="btn btn-ghost text-2xl font-bold tracking-wide text-white">🎬 FilmeApi</a>
+        </div>
+        <div class="flex items-center gap-3">
+            <img th:src="${avatar}" alt="Avatar" class="w-10 h-10 rounded-full border-2 border-green-600">
+            <span th:text="${user.attributes.email}" class="font-semibold text-green-700"></span>
+            <a href="/logout" class="btn btn-error">Logout</a>
+            <details>
+                <summary class="btn btn-success">🌎</summary>
+                <ul class="bg-green-600 rounded-t-none p-2">
+                    <li><a href="?lang=pt_BR" class="text-white hover:bg-green-700 px-4 py-2 block">🇧🇷 Português</a></li>
+                    <li><a href="?lang=en_US" class="text-white hover:bg-green-700 px-4 py-2 block">🏴 English</a></li>
+                </ul>
+            </details>
+        </div>
+    </nav>
+
+
+<div class="flex justify-between items-center px-8 mb-6">
+    <h1 class="text-3xl font-bold text-white">Catálogo de Filmes</h1>
+    <a href="/filmes/form" class="btn btn-primary text-white font-bold shadow-lg">+ Novo Filme</a>
+</div>
 
 <div th:if="${message}" role="alert" class="alert alert-success alert-soft m-4">
     <span th:text="${message}"></span>
 </div>
 
-<main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 place-items-center">
-    <div th:each="filme : ${filmes}" class="card w-96 bg-base-300 shadow-xl rounded-xl overflow-hidden relative">
+<main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 px-8 pb-12">
+    <div th:each="filme : ${filmes}" class="card w-80 shadow-2xl rounded-xl overflow-hidden relative transition-transform hover:scale-105">
         <div th:if="${filme.capaUrl}" class="relative">
             <img th:src="${filme.capaUrl}" alt="Capa do Filme"
-                 class="w-full h-72 object-cover"/>
-            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-4">
-                <h2 class="text-white text-2xl font-bold mb-2" th:text="${filme.titulo}"></h2>
+                 class="w-full h-64 object-cover rounded-t-xl"/>
+            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 to-transparent p-4">
+                <h2 class="card-title text-white text-xl font-bold mb-2" th:text="${filme.titulo}"></h2>
                 <span class="badge badge-accent mb-2" th:text="${filme.genero}"></span>
                 <p class="text-white"><strong>Ano:</strong> <span th:text="${filme.anoLancamento}"></span></p>
                 <p class="text-white"><strong>Diretor:</strong> <span th:text="${filme.diretor}"></span></p>
@@ -38,11 +93,7 @@
             </div>
         </div>
         <div class="card-actions flex justify-end p-4 bg-base-300">
-            <a th:href="@{'/filme/edit/' + ${filme.id}}" class="btn btn-info">Editar</a>
-            <form th:action="@{'/filme/' + ${filme.id}}" method="post" style="display:inline;">
-                <input type="hidden" name="_method" value="DELETE">
-                <button class="btn btn-primary" type="submit">Excluir</button>
-            </form>
+            <a th:href="@{'/filmes/deletar/' + ${filme.id}}" class="btn btn-primary text-white font-bold">Excluir</a>
         </div>
     </div>
 </main>
