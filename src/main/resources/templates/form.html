@@ -1,53 +1,66 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dracula" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt" data-theme="dracula" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
-    <title>Filme Form</title>
+    <title>FilmeApi - Novo Filme</title>
 </head>
-<body>
+<body class="bg-base-200 min-h-screen flex flex-col">
 
-<h1 class="text-primary text-2xl font-bold p-4">FilmeApi</h1>
+<header class="bg-primary text-white p-4 shadow-lg">
+    <h1 class="text-2xl font-bold">Novo Filme</h1>
+</header>
 
-<main class="grid grid-cols-1 gap-4 p-4 place-items-center">
-    <form method="POST" class="w-full max-w-md" th:object="${filme}" th:action="@{/filmes/form}">
-        <h2 class="text-secondary font-bold text-xl">Novo Filme</h2>
+<main class="flex-grow grid grid-cols-1 gap-6 p-6 place-items-center">
+    <form method="POST" class="w-full max-w-md bg-base-100 shadow-xl rounded-lg p-6" th:object="${filme}" th:action="@{/filmes/form}">
 
-        <fieldset class="fieldset">
+        <!-- Erros globais -->
+        <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-error mb-4">
+            <span th:each="err : ${#fields.globalErrors()}" th:text="${err}"></span>
+        </div>
+
+        <h2 class="text-lg font-bold mb-4 text-gray-700">Cadastro de Filme</h2>
+
+        <!-- Título -->
+        <fieldset class="fieldset mb-4">
             <legend class="fieldset-legend">Título</legend>
-            <input th:field="*{titulo}" th:errorclass="input-error" type="text" class="input" maxlength="150" required />
+            <input th:field="*{titulo}" th:errorclass="input-error"
+                   type="text" class="input input-bordered w-full" maxlength="150" />
             <p class="label text-error" th:errors="*{titulo}"></p>
         </fieldset>
 
-        <fieldset class="fieldset">
+        <!-- Gênero -->
+        <fieldset class="fieldset mb-4">
             <legend class="fieldset-legend">Gênero</legend>
-            <input th:field="*{genero}" th:errorclass="input-error" type="text" class="input" maxlength="100" required />
+            <input th:field="*{genero}" th:errorclass="input-error"
+                   type="text" class="input input-bordered w-full" maxlength="100" />
             <p class="label text-error" th:errors="*{genero}"></p>
         </fieldset>
 
-        <fieldset class="fieldset">
+        <!-- Ano de Lançamento -->
+        <fieldset class="fieldset mb-4">
             <legend class="fieldset-legend">Ano de Lançamento</legend>
-            <input th:field="*{anoLancamento}" th:errorclass="input-error" type="number" class="input" min="1888" max="2100" required />
+            <input th:field="*{anoLancamento}" th:errorclass="input-error"
+                   type="number" class="input input-bordered w-full" min="1888" max="2100" />
             <p class="label text-error" th:errors="*{anoLancamento}"></p>
         </fieldset>
 
-        <fieldset class="fieldset">
+        <!-- Diretor -->
+        <fieldset class="fieldset mb-4">
             <legend class="fieldset-legend">Diretor</legend>
-            <input th:field="*{diretor}" th:errorclass="input-error" type="text" class="input" maxlength="120" required />
+            <input th:field="*{diretor}" th:errorclass="input-error"
+                   type="text" class="input input-bordered w-full" maxlength="120" />
             <p class="label text-error" th:errors="*{diretor}"></p>
         </fieldset>
 
-        <fieldset class="fieldset">
-            <legend class="fieldset-legend">URL da Capa</legend>
-            <input th:field="*{capaUrl}" th:errorclass="input-error" type="url" class="input" maxlength="500" />
-            <p class="label text-error" th:errors="*{capaUrl}"></p>
-        </fieldset>
 
-        <div>
-            <a href="/filme" class="btn btn-neutral">Cancelar</a>
-            <button class="btn btn-primary" type="submit">Salvar</button>
+
+        <!-- Botões -->
+        <div class="flex justify-between">
+            <a href="/filmes" class="btn btn-neutral">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Salvar</button>
         </div>
     </form>
 </main>
