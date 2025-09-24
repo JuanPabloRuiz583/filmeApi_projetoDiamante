@@ -3,8 +3,8 @@ services:
     image: 'postgres:latest'
     container_name: postgres_zz
     environment:
-      - 'POSTGRES_DB=epictask'
-      - 'POSTGRES_PASSWORD=epictask'
-      - 'POSTGRES_USER=epictask'
+      - 'POSTGRES_DB=filmediamante'
+      - 'POSTGRES_PASSWORD=filmediamante'
+      - 'POSTGRES_USER=filmediamante'
     ports:
       - '5432:5432'

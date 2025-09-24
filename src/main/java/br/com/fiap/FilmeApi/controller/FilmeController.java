@@ -6,6 +6,8 @@ import br.com.fiap.FilmeApi.services.FilmeService;
 import br.com.fiap.FilmeApi.services.TmdbService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +22,13 @@ public class FilmeController {
 
     @Autowired
     private FilmeService filmeService;
+
+    private final MessageSource messageSource;
+
+    public FilmeController(FilmeService filmeService, MessageSource messageSource) {
+        this.filmeService = filmeService;
+        this.messageSource = messageSource;
+    }
 
 
     @GetMapping
@@ -41,13 +50,15 @@ public class FilmeController {
         return "form";
     }
 
-    // Save film
+
     @PostMapping("/form")
-    public String salvar(@Valid @ModelAttribute Filme filme, BindingResult result, Model model) {
+    public String salvar(@Valid @ModelAttribute Filme filme, BindingResult result, RedirectAttributes redirect, Model model) {
         if (result.hasErrors()) {
             return "form";
         }
         filmeService.salvar(filme);
+        var message = messageSource.getMessage("filme.create.success", null, LocaleContextHolder.getLocale());
+        redirect.addFlashAttribute("message", message);
         return "redirect:/filmes";
     }
 

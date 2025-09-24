@@ -19,21 +19,21 @@ public class Filme {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "O título é obrigatório.")
-    @Size(max = 150, message = "O título deve ter no máximo 150 caracteres.")
+    @NotBlank(message = "{filme.title.notblank}")
+    @Size(max = 150, message = "{filme.title.size}")
     private String titulo;
 
-    @NotBlank(message = "O gênero é obrigatório.")
-    @Size(max = 100, message = "O gênero deve ter no máximo 100 caracteres.")
+    @NotBlank(message = "{filme.genero.notblank}")
+    @Size(max = 100, message = "{filme.genero.size}")
     private String genero;
 
-    @NotNull(message = "O ano de lançamento é obrigatório.")
-    @Min(value = 1888, message = "O cinema começou em 1888, informe um ano válido.")
-    @Max(value = 2100, message = "Informe um ano válido até 2100.")
+    @NotNull(message = "{filme.ano.notnull}")
+    @Min(value = 1888, message = "{filme.ano.min}")
+    @Max(value = 2100, message = "{filme.ano.max}")
     private Integer anoLancamento;
 
-    @NotBlank(message = "O diretor é obrigatório.")
-    @Size(max = 120, message = "O nome do diretor deve ter no máximo 120 caracteres.")
+    @NotBlank(message = "{filme.diretor.notblank}")
+    @Size(max = 120, message = "{filme.diretor.size}")
     private String diretor;
 
     @Column(name = "capa_url")

@@ -5,12 +5,12 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
-    <title>FilmeApi - Novo Filme</title>
+    <title th:text="#{filme.new}">FilmeApi - Novo Filme</title>
 </head>
 <body class="bg-base-200 min-h-screen flex flex-col">
 
 <header class="bg-primary text-white p-4 shadow-lg">
-    <h1 class="text-2xl font-bold">Novo Filme</h1>
+    <h1 class="text-2xl font-bold" th:text="#{filme.new}">Novo Filme</h1>
 </header>
 
 <main class="flex-grow grid grid-cols-1 gap-6 p-6 place-items-center">
@@ -21,11 +21,11 @@
             <span th:each="err : ${#fields.globalErrors()}" th:text="${err}"></span>
         </div>
 
-        <h2 class="text-lg font-bold mb-4 text-gray-700">Cadastro de Filme</h2>
+        <h2 class="text-lg font-bold mb-4 text-gray-700" th:text="#{filme.new}">Cadastro de Filme</h2>
 
         <!-- Título -->
         <fieldset class="fieldset mb-4">
-            <legend class="fieldset-legend">Título</legend>
+            <legend class="fieldset-legend" th:text="#{title}">Título</legend>
             <input th:field="*{titulo}" th:errorclass="input-error"
                    type="text" class="input input-bordered w-full" maxlength="150" />
             <p class="label text-error" th:errors="*{titulo}"></p>
@@ -33,7 +33,7 @@
 
         <!-- Gênero -->
         <fieldset class="fieldset mb-4">
-            <legend class="fieldset-legend">Gênero</legend>
+            <legend class="fieldset-legend" th:text="#{genre}">Gênero</legend>
             <input th:field="*{genero}" th:errorclass="input-error"
                    type="text" class="input input-bordered w-full" maxlength="100" />
             <p class="label text-error" th:errors="*{genero}"></p>
@@ -41,7 +41,7 @@
 
         <!-- Ano de Lançamento -->
         <fieldset class="fieldset mb-4">
-            <legend class="fieldset-legend">Ano de Lançamento</legend>
+            <legend class="fieldset-legend" th:text="#{releaseYear}">Ano de Lançamento</legend>
             <input th:field="*{anoLancamento}" th:errorclass="input-error"
                    type="number" class="input input-bordered w-full" min="1888" max="2100" />
             <p class="label text-error" th:errors="*{anoLancamento}"></p>
@@ -49,18 +49,16 @@
 
         <!-- Diretor -->
         <fieldset class="fieldset mb-4">
-            <legend class="fieldset-legend">Diretor</legend>
+            <legend class="fieldset-legend" th:text="#{director}">Diretor</legend>
             <input th:field="*{diretor}" th:errorclass="input-error"
                    type="text" class="input input-bordered w-full" maxlength="120" />
             <p class="label text-error" th:errors="*{diretor}"></p>
         </fieldset>
 
-
-
         <!-- Botões -->
         <div class="flex justify-between">
-            <a href="/filmes" class="btn btn-neutral">Cancelar</a>
-            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="/filmes" class="btn btn-neutral" th:text="#{cancel}">Cancelar</a>
+            <button type="submit" class="btn btn-primary" th:text="#{save}">Salvar</button>
         </div>
     </form>
 </main>
