@@ -40,3 +40,10 @@ API e aplicação web para cadastro, listagem e gerenciamento de filmes, com int
 
 5. **Acesse no navegador:**
 Apos rodar a aplicação, acesse: http://localhost:8080/filmes
+
+
+
+## Integrantes
+
+Juan Pablo Ruiz de Souza rm: 557727
+
